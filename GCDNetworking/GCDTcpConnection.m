@@ -260,7 +260,7 @@
     if (dispatch_get_current_queue() == socketQueue)
         block();
     else
-        dispatch_async(socketQueue, block);
+        dispatch_sync(socketQueue, block);
 }
 
 @end
