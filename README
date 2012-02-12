@@ -1,0 +1,11 @@
+GCDNetworking is a framework for MacOS X which uses Grand Central Dispatch
+to perform usually blocking operations.
+
+It is inspired by the famous CocoaAsyncSocket by Robbie Hanson (http://github.com/robbiehanson/CocoaAsyncSocket)
+but uses a dispatch_source_t as its engine.
+
+For now, the framework is composed only by the GCDTcpConnection class,
+but I have planned to add a GCDTcpServer and SSL capabilities for
+both GCDTcpConnection and GCDTcpserver, I don't know maybe by subclassing
+or using categories.
+UdpSocket is planned as well.

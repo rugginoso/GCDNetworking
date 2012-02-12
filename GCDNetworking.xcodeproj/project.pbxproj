@@ -1,0 +1,276 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		EDDD263314E058D8003379E4 /* GCDNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = EDE9B98D14E01A1400C06D16 /* GCDNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EDE2A8EA14E2E27200AF739B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE9B98514E01A1400C06D16 /* Foundation.framework */; };
+		EDE9B98B14E01A1400C06D16 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EDE9B98914E01A1400C06D16 /* InfoPlist.strings */; };
+		EDE9B99714E01A6D00C06D16 /* GCDTcpConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = EDE9B99514E01A6D00C06D16 /* GCDTcpConnection.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		EDE9B99814E01A6D00C06D16 /* GCDTcpConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = EDE9B99614E01A6D00C06D16 /* GCDTcpConnection.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		EDE9B97D14E01A1400C06D16 /* GCDNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GCDNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EDE9B98514E01A1400C06D16 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		EDE9B98814E01A1400C06D16 /* GCDNetworking-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GCDNetworking-Info.plist"; sourceTree = "<group>"; };
+		EDE9B98A14E01A1400C06D16 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		EDE9B98C14E01A1400C06D16 /* GCDNetworking-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GCDNetworking-Prefix.pch"; sourceTree = "<group>"; };
+		EDE9B98D14E01A1400C06D16 /* GCDNetworking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCDNetworking.h; sourceTree = "<group>"; };
+		EDE9B99514E01A6D00C06D16 /* GCDTcpConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDTcpConnection.h; sourceTree = "<group>"; };
+		EDE9B99614E01A6D00C06D16 /* GCDTcpConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDTcpConnection.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EDE9B97914E01A1400C06D16 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDE2A8EA14E2E27200AF739B /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EDE9B97114E01A1400C06D16 = {
+			isa = PBXGroup;
+			children = (
+				EDE9B98614E01A1400C06D16 /* GCDNetworking */,
+				EDE9B97F14E01A1400C06D16 /* Frameworks */,
+				EDE9B97E14E01A1400C06D16 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EDE9B97E14E01A1400C06D16 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EDE9B97D14E01A1400C06D16 /* GCDNetworking.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EDE9B97F14E01A1400C06D16 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EDE9B98514E01A1400C06D16 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EDE9B98614E01A1400C06D16 /* GCDNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				EDE9B98D14E01A1400C06D16 /* GCDNetworking.h */,
+				EDE9B99514E01A6D00C06D16 /* GCDTcpConnection.h */,
+				EDE9B99614E01A6D00C06D16 /* GCDTcpConnection.m */,
+				EDE9B98714E01A1400C06D16 /* Supporting Files */,
+			);
+			path = GCDNetworking;
+			sourceTree = "<group>";
+		};
+		EDE9B98714E01A1400C06D16 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				EDE9B98814E01A1400C06D16 /* GCDNetworking-Info.plist */,
+				EDE9B98914E01A1400C06D16 /* InfoPlist.strings */,
+				EDE9B98C14E01A1400C06D16 /* GCDNetworking-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		EDE9B97A14E01A1400C06D16 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDDD263314E058D8003379E4 /* GCDNetworking.h in Headers */,
+				EDE9B99714E01A6D00C06D16 /* GCDTcpConnection.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		EDE9B97C14E01A1400C06D16 /* GCDNetworking */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EDE9B99214E01A1400C06D16 /* Build configuration list for PBXNativeTarget "GCDNetworking" */;
+			buildPhases = (
+				EDE9B97814E01A1400C06D16 /* Sources */,
+				EDE9B97914E01A1400C06D16 /* Frameworks */,
+				EDE9B97A14E01A1400C06D16 /* Headers */,
+				EDE9B97B14E01A1400C06D16 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GCDNetworking;
+			productName = GCDNetworking;
+			productReference = EDE9B97D14E01A1400C06D16 /* GCDNetworking.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EDE9B97314E01A1400C06D16 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "Develer srl";
+			};
+			buildConfigurationList = EDE9B97614E01A1400C06D16 /* Build configuration list for PBXProject "GCDNetworking" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = EDE9B97114E01A1400C06D16;
+			productRefGroup = EDE9B97E14E01A1400C06D16 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EDE9B97C14E01A1400C06D16 /* GCDNetworking */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EDE9B97B14E01A1400C06D16 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDE9B98B14E01A1400C06D16 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EDE9B97814E01A1400C06D16 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDE9B99814E01A6D00C06D16 /* GCDTcpConnection.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		EDE9B98914E01A1400C06D16 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EDE9B98A14E01A1400C06D16 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		EDE9B99014E01A1400C06D16 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		EDE9B99114E01A1400C06D16 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		EDE9B99314E01A1400C06D16 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GCDNetworking/GCDNetworking-Prefix.pch";
+				INFOPLIST_FILE = "GCDNetworking/GCDNetworking-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		EDE9B99414E01A1400C06D16 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GCDNetworking/GCDNetworking-Prefix.pch";
+				INFOPLIST_FILE = "GCDNetworking/GCDNetworking-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EDE9B97614E01A1400C06D16 /* Build configuration list for PBXProject "GCDNetworking" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EDE9B99014E01A1400C06D16 /* Debug */,
+				EDE9B99114E01A1400C06D16 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EDE9B99214E01A1400C06D16 /* Build configuration list for PBXNativeTarget "GCDNetworking" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EDE9B99314E01A1400C06D16 /* Debug */,
+				EDE9B99414E01A1400C06D16 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EDE9B97314E01A1400C06D16 /* Project object */;
+}
