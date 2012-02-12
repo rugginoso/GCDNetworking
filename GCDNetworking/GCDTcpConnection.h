@@ -19,10 +19,10 @@
 @property (assign) dispatch_queue_t delegateQueue;
 
 
-+ (void) connectToHost:(NSHost *)host
-                  port:(uint16_t)port
-          withDelegate:(id<GCDTcpConnectionDelegate>) delegate
-         delegateQueue:(dispatch_queue_t)queue;
++ (void)connectToHost:(NSHost *)host
+                port:(uint16_t)port
+        withDelegate:(id<GCDTcpConnectionDelegate>) delegate
+       delegateQueue:(dispatch_queue_t)queue;
 
 - (id)initWithFileDescriptor:(int)fileDescriptor;
 
