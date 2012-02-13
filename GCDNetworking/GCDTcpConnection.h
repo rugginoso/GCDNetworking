@@ -18,11 +18,13 @@
 @property (weak) id<GCDTcpConnectionDelegate> delegate;
 @property (assign) dispatch_queue_t delegateQueue;
 
+@property (readonly, nonatomic, retain) NSError *lastError;
 
 + (void)connectToHost:(NSHost *)host
-                port:(uint16_t)port
-        withDelegate:(id<GCDTcpConnectionDelegate>) delegate
-       delegateQueue:(dispatch_queue_t)queue;
+                 port:(uint16_t)port
+         withDelegate:(id<GCDTcpConnectionDelegate>) delegate
+        delegateQueue:(dispatch_queue_t)queue
+                error:(NSError **)error;
 
 - (id)initWithFileDescriptor:(int)fileDescriptor;
 
@@ -54,5 +56,6 @@
 - (void)didConnectWithConnection:(GCDTcpConnection *)connection;
 - (void)didReceiveDataOnConnection:(GCDTcpConnection *)connection;
 - (void)didFinishWriteOnConnection:(GCDTcpConnection *)connection;
+- (void)didHaveErrorOnConnection:(GCDTcpConnection *)connection;
 
 @end

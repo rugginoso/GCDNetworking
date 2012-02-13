@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EDA8812114E82EAB008D0FED /* NSError+Errno.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA8811F14E82EAB008D0FED /* NSError+Errno.h */; };
+		EDA8812214E82EAB008D0FED /* NSError+Errno.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA8812014E82EAB008D0FED /* NSError+Errno.m */; };
 		EDDD263314E058D8003379E4 /* GCDNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = EDE9B98D14E01A1400C06D16 /* GCDNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EDE2A8EA14E2E27200AF739B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE9B98514E01A1400C06D16 /* Foundation.framework */; };
 		EDE9B98B14E01A1400C06D16 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EDE9B98914E01A1400C06D16 /* InfoPlist.strings */; };
@@ -15,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EDA8811F14E82EAB008D0FED /* NSError+Errno.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+Errno.h"; sourceTree = "<group>"; };
+		EDA8812014E82EAB008D0FED /* NSError+Errno.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+Errno.m"; sourceTree = "<group>"; };
 		EDE9B97D14E01A1400C06D16 /* GCDNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GCDNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDE9B98514E01A1400C06D16 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		EDE9B98814E01A1400C06D16 /* GCDNetworking-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GCDNetworking-Info.plist"; sourceTree = "<group>"; };
@@ -68,6 +72,8 @@
 				EDE9B98D14E01A1400C06D16 /* GCDNetworking.h */,
 				EDE9B99514E01A6D00C06D16 /* GCDTcpConnection.h */,
 				EDE9B99614E01A6D00C06D16 /* GCDTcpConnection.m */,
+				EDA8811F14E82EAB008D0FED /* NSError+Errno.h */,
+				EDA8812014E82EAB008D0FED /* NSError+Errno.m */,
 				EDE9B98714E01A1400C06D16 /* Supporting Files */,
 			);
 			path = GCDNetworking;
@@ -92,6 +98,7 @@
 			files = (
 				EDDD263314E058D8003379E4 /* GCDNetworking.h in Headers */,
 				EDE9B99714E01A6D00C06D16 /* GCDTcpConnection.h in Headers */,
+				EDA8812114E82EAB008D0FED /* NSError+Errno.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,6 +166,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EDE9B99814E01A6D00C06D16 /* GCDTcpConnection.m in Sources */,
+				EDA8812214E82EAB008D0FED /* NSError+Errno.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,6 +14,8 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 
+#import "NSError+Errno.h"
+
 
 @interface GCDTcpConnection ()
 
@@ -24,6 +26,7 @@
 @property (readonly, nonatomic) NSMutableData *writeBuffer;
 @property (readwrite, nonatomic, retain) NSHost *peerHost;
 @property (readwrite, nonatomic, assign) uint16_t *peerPort;
+@property (readwrite, nonatomic, retain) NSError *lastError;
 
 @end
 
@@ -43,6 +46,8 @@
 
     id<GCDTcpConnectionDelegate> delegate;
     dispatch_queue_t delegateQueue;
+
+    NSError *lastError;
 }
 
 @synthesize peerHost;
@@ -55,12 +60,14 @@
 @synthesize writeSource;
 @synthesize readBuffer;
 @synthesize writeBuffer;
+@synthesize lastError;
 
 
 + (void)connectToHost:(NSHost *)host
                  port:(uint16_t)port
          withDelegate:(id<GCDTcpConnectionDelegate>) delegate
         delegateQueue:(dispatch_queue_t)queue
+                error:(NSError **)error
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
         int fd = -1;
@@ -73,10 +80,21 @@
         addr.sin_port = htons(port);
 
         if ((fd = socket(PF_INET, SOCK_STREAM, 0)) < 0)
+        {
+            if (error) {
+                *error = [NSError errorWithErrno:errno
+                                     description:@"Socket creation error"];
+            }
             return;
+        }
 
-        if (connect(fd, (struct sockaddr *) &addr, sizeof(struct sockaddr_in)) < 0)
+        if (connect(fd, (struct sockaddr *) &addr, sizeof(struct sockaddr_in)) < 0) {
+            if (error) {
+                *error = [NSError errorWithErrno:errno
+                                     description:@"Connection error"];
+            }
             return;
+        }
 
         GCDTcpConnection *connection = [[GCDTcpConnection alloc] initWithFileDescriptor:fd];
         if (connection) {
@@ -135,6 +153,23 @@
             void *buf = malloc(estimated);
 
             ssize_t got = read([wself fd], buf, estimated);
+            if (got < 0) {
+                NSError *error = [NSError errorWithErrno:errno
+                                             description:@"Read error"];
+                [wself setLastError:error];
+
+                if ([wself delegate]) {
+                    dispatch_async([wself delegateQueue], ^(void) {
+                        [[wself delegate] didHaveErrorOnConnection:wself];
+                    });
+                }
+
+                free(buf);
+
+                // FIXME: dispatch_suspend or disconnect
+
+                return;
+            }
 
             [[wself readBuffer] appendBytes:buf length:got];
 
@@ -147,9 +182,26 @@
         });
 
         dispatch_source_set_event_handler(writeSource, ^(void) {
-            NSUInteger wrote = write([wself fd],
+            ssize_t wrote = write([wself fd],
                                      [[wself writeBuffer] bytes],
                                      [[wself writeBuffer] length]);
+
+            if (wrote < 0) {
+                NSError *error = [NSError errorWithErrno:errno
+                                             description:@"Write error"];
+                [wself setLastError:error];
+
+                if ([wself delegate]) {
+                    dispatch_async([wself delegateQueue], ^(void) {
+                        [[wself delegate] didHaveErrorOnConnection:wself];
+                    });
+                }
+
+                // FIXME: dispatch_suspend or disconnect
+
+                return;
+            }
+
 
             [[wself writeBuffer] replaceBytesInRange:NSMakeRange(0, wrote)
                                            withBytes:NULL
