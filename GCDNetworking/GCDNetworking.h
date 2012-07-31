@@ -6,4 +6,4 @@
 //  Copyright (c) 2012 Develer srl. All rights reserved.
 //
 
-#include "GCDNetworking/GCDTcpConnection.h"
+#import "GCDNetworking/GCDTcpSocket.h"

@@ -7,26 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EDA8812114E82EAB008D0FED /* NSError+Errno.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA8811F14E82EAB008D0FED /* NSError+Errno.h */; };
-		EDA8812214E82EAB008D0FED /* NSError+Errno.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA8812014E82EAB008D0FED /* NSError+Errno.m */; };
+		ED10BB3415C79D9900784627 /* GCDTcpSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = ED10BB3215C79D9900784627 /* GCDTcpSocket.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		ED10BB3515C79D9900784627 /* GCDTcpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = ED10BB3315C79D9900784627 /* GCDTcpSocket.m */; };
 		EDDD263314E058D8003379E4 /* GCDNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = EDE9B98D14E01A1400C06D16 /* GCDNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EDE2A8EA14E2E27200AF739B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDE9B98514E01A1400C06D16 /* Foundation.framework */; };
 		EDE9B98B14E01A1400C06D16 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = EDE9B98914E01A1400C06D16 /* InfoPlist.strings */; };
-		EDE9B99714E01A6D00C06D16 /* GCDTcpConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = EDE9B99514E01A6D00C06D16 /* GCDTcpConnection.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		EDE9B99814E01A6D00C06D16 /* GCDTcpConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = EDE9B99614E01A6D00C06D16 /* GCDTcpConnection.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		EDA8811F14E82EAB008D0FED /* NSError+Errno.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+Errno.h"; sourceTree = "<group>"; };
-		EDA8812014E82EAB008D0FED /* NSError+Errno.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+Errno.m"; sourceTree = "<group>"; };
+		ED10BB3215C79D9900784627 /* GCDTcpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDTcpSocket.h; sourceTree = "<group>"; };
+		ED10BB3315C79D9900784627 /* GCDTcpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDTcpSocket.m; sourceTree = "<group>"; };
 		EDE9B97D14E01A1400C06D16 /* GCDNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GCDNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDE9B98514E01A1400C06D16 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		EDE9B98814E01A1400C06D16 /* GCDNetworking-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GCDNetworking-Info.plist"; sourceTree = "<group>"; };
 		EDE9B98A14E01A1400C06D16 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		EDE9B98C14E01A1400C06D16 /* GCDNetworking-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GCDNetworking-Prefix.pch"; sourceTree = "<group>"; };
 		EDE9B98D14E01A1400C06D16 /* GCDNetworking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCDNetworking.h; sourceTree = "<group>"; };
-		EDE9B99514E01A6D00C06D16 /* GCDTcpConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDTcpConnection.h; sourceTree = "<group>"; };
-		EDE9B99614E01A6D00C06D16 /* GCDTcpConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDTcpConnection.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,10 +66,8 @@
 			isa = PBXGroup;
 			children = (
 				EDE9B98D14E01A1400C06D16 /* GCDNetworking.h */,
-				EDE9B99514E01A6D00C06D16 /* GCDTcpConnection.h */,
-				EDE9B99614E01A6D00C06D16 /* GCDTcpConnection.m */,
-				EDA8811F14E82EAB008D0FED /* NSError+Errno.h */,
-				EDA8812014E82EAB008D0FED /* NSError+Errno.m */,
+				ED10BB3215C79D9900784627 /* GCDTcpSocket.h */,
+				ED10BB3315C79D9900784627 /* GCDTcpSocket.m */,
 				EDE9B98714E01A1400C06D16 /* Supporting Files */,
 			);
 			path = GCDNetworking;
@@ -97,8 +91,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EDDD263314E058D8003379E4 /* GCDNetworking.h in Headers */,
-				EDE9B99714E01A6D00C06D16 /* GCDTcpConnection.h in Headers */,
-				EDA8812114E82EAB008D0FED /* NSError+Errno.h in Headers */,
+				ED10BB3415C79D9900784627 /* GCDTcpSocket.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,7 +122,7 @@
 		EDE9B97314E01A1400C06D16 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0440;
 				ORGANIZATIONNAME = "Develer srl";
 			};
 			buildConfigurationList = EDE9B97614E01A1400C06D16 /* Build configuration list for PBXProject "GCDNetworking" */;
@@ -165,8 +158,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EDE9B99814E01A6D00C06D16 /* GCDTcpConnection.m in Sources */,
-				EDA8812214E82EAB008D0FED /* NSError+Errno.m in Sources */,
+				ED10BB3515C79D9900784627 /* GCDTcpSocket.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,6 +224,8 @@
 		EDE9B99314E01A1400C06D16 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
@@ -246,6 +240,8 @@
 		EDE9B99414E01A1400C06D16 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
