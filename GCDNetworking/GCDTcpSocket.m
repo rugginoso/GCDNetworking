@@ -37,8 +37,7 @@
 
 - (void)dealloc
 {
-    dispatch_release(_socketQueue);
-
+    _socketQueue = nil;
     _host = nil;
     _wbuffer = nil;
     _rbuffer = nil;
@@ -199,8 +198,8 @@
     dispatch_resume(_wsource);
     dispatch_source_cancel(_wsource);
 
-    dispatch_release(_rsource);
-    dispatch_release(_wsource);
+    _rsource = nil;
+    _wsource = nil;
 
     __unsafe_unretained GCDTcpSocket *wself = self;
 
