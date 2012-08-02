@@ -46,7 +46,7 @@
 
 - (void)connect
 {
-    __block GCDTcpSocket *wself = self;
+    __unsafe_unretained GCDTcpSocket *wself = self;
 
     dispatch_async(wself->_socketQueue, ^(void) {
         // Connect to host
@@ -202,7 +202,7 @@
     dispatch_release(_rsource);
     dispatch_release(_wsource);
 
-    __block GCDTcpSocket *wself = self;
+    __unsafe_unretained GCDTcpSocket *wself = self;
 
     if (self.delegate && [self.delegate respondsToSelector:@selector(socket:didDisconnectFromHost:port:)]) {
         dispatch_async(self->_delegateQueue, ^(void) {
@@ -213,7 +213,7 @@
 
 - (NSUInteger)bytesAvaiable
 {
-    __block GCDTcpSocket *wself = self;
+    __unsafe_unretained GCDTcpSocket *wself = self;
     __block NSUInteger result;
 
     dispatch_block_t block = ^(void) {
@@ -230,7 +230,7 @@
 
 - (NSData *)readDataToLength:(NSUInteger)length
 {
-    __block GCDTcpSocket *wself = self;
+    __unsafe_unretained GCDTcpSocket *wself = self;
     __block NSData *result;
 
     dispatch_block_t block = ^(void) {
@@ -253,7 +253,7 @@
 
 - (void)writeData:(NSData *)data
 {
-    __block GCDTcpSocket *wself = self;
+    __unsafe_unretained GCDTcpSocket *wself = self;
 
     dispatch_block_t block = ^(void) {
         [wself->_wbuffer appendData:data];
@@ -285,7 +285,7 @@
 - (BOOL)canReadLineWithSeparator:(NSString *)separator
                    usingEncoding:(NSStringEncoding)encoding
 {
-    __block GCDTcpSocket *wself = self;
+    __unsafe_unretained GCDTcpSocket *wself = self;
     __block BOOL result;
 
     dispatch_block_t block = ^(void) {
