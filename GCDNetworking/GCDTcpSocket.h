@@ -6,8 +6,6 @@
 //  Copyright (c) 2012 Develer srl. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
 @interface GCDTcpSocket : NSObject
 {
     int _fd;

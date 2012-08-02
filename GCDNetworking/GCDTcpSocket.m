@@ -8,6 +8,8 @@
 
 #import "GCDTcpSocket.h"
 
+#import <Foundation/Foundation.h>
+
 #import <sys/types.h>
 #import <sys/socket.h>
 #import <arpa/inet.h>
