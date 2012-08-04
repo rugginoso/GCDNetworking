@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ED00609E15CC594100B94CCD /* GCDTcpServer.h in Headers */ = {isa = PBXBuildFile; fileRef = ED00609C15CC594100B94CCD /* GCDTcpServer.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		ED00609F15CC594100B94CCD /* GCDTcpServer.m in Sources */ = {isa = PBXBuildFile; fileRef = ED00609D15CC594100B94CCD /* GCDTcpServer.m */; };
 		ED10BB3415C79D9900784627 /* GCDTcpSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = ED10BB3215C79D9900784627 /* GCDTcpSocket.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		ED10BB3515C79D9900784627 /* GCDTcpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = ED10BB3315C79D9900784627 /* GCDTcpSocket.m */; };
 		EDDD263314E058D8003379E4 /* GCDNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = EDE9B98D14E01A1400C06D16 /* GCDNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -15,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		ED00609C15CC594100B94CCD /* GCDTcpServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDTcpServer.h; sourceTree = "<group>"; };
+		ED00609D15CC594100B94CCD /* GCDTcpServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDTcpServer.m; sourceTree = "<group>"; };
 		ED10BB3215C79D9900784627 /* GCDTcpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDTcpSocket.h; sourceTree = "<group>"; };
 		ED10BB3315C79D9900784627 /* GCDTcpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDTcpSocket.m; sourceTree = "<group>"; };
 		EDE9B97D14E01A1400C06D16 /* GCDNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GCDNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -65,6 +69,8 @@
 		EDE9B98614E01A1400C06D16 /* GCDNetworking */ = {
 			isa = PBXGroup;
 			children = (
+				ED00609C15CC594100B94CCD /* GCDTcpServer.h */,
+				ED00609D15CC594100B94CCD /* GCDTcpServer.m */,
 				EDE9B98D14E01A1400C06D16 /* GCDNetworking.h */,
 				ED10BB3215C79D9900784627 /* GCDTcpSocket.h */,
 				ED10BB3315C79D9900784627 /* GCDTcpSocket.m */,
@@ -92,6 +98,7 @@
 			files = (
 				EDDD263314E058D8003379E4 /* GCDNetworking.h in Headers */,
 				ED10BB3415C79D9900784627 /* GCDTcpSocket.h in Headers */,
+				ED00609E15CC594100B94CCD /* GCDTcpServer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,6 +166,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED10BB3515C79D9900784627 /* GCDTcpSocket.m in Sources */,
+				ED00609F15CC594100B94CCD /* GCDTcpServer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,3 +7,4 @@
 //
 
 #import "GCDNetworking/GCDTcpSocket.h"
+#import "GCDNetworking/GCDTcpServer.h"
