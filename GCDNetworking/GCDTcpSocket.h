@@ -10,7 +10,7 @@
 
 @interface GCDTcpSocket : NSObject
 
-@property (readonly) NSHost *host;
+@property (readonly, strong) NSHost *host;
 @property (readonly) uint16_t port;
 
 @property (weak) id<GCDTcpSocketDelegate> delegate;
