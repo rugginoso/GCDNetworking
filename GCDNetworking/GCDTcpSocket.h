@@ -19,6 +19,10 @@
 
     dispatch_source_t _rsource;
     dispatch_source_t _wsource;
+
+    BOOL _isConnected;
+    BOOL _hasReadableData;
+    BOOL _hasWrittenData;
 }
 
 @property (readonly) NSHost *host;
@@ -26,7 +30,6 @@
 
 @property (weak) id<GCDTcpSocketDelegate> delegate;
 @property (assign) dispatch_queue_t delegateQueue;
-
 
 - (id)initWithHost:(NSHost *)host port:(uint16_t)port;
 
@@ -37,6 +40,16 @@
 
 - (NSData *)readDataToLength:(NSUInteger)length;
 - (void)writeData:(NSData *)data;
+
+@end
+
+@interface GCDTcpSocket (Blocking)
+
+- (BOOL)waitForConnectionNotifyWithTimeout:(NSTimeInterval)timeout;
+- (BOOL)waitForDisconnecionNotifyWithTimeout:(NSTimeInterval)timeout;
+
+- (BOOL)waitForReadNotifyWithTimeout:(NSTimeInterval)timeout;
+- (BOOL)waitForWriteNotifyWithTimeout:(NSTimeInterval)timeout;
 
 @end
 

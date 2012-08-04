@@ -125,6 +125,8 @@
 
             [wself->_rbuffer appendBytes:buf length:got];
 
+            wself->_hasReadableData = YES;
+
             if (wself->_delegate && [wself->_delegate respondsToSelector:@selector(socket:didReceive:)]) {
                 dispatch_async(wself->_delegateQueue, ^(void) {
                     [wself->_delegate socket:wself didReceive:got];
@@ -161,15 +163,17 @@
                                         withBytes:NULL
                                            length:0];
 
-            if (wself->_delegate && [wself->_delegate respondsToSelector:@selector(socket:didWrite:)]) {
-                dispatch_async(wself->_delegateQueue, ^(void) {
-                    [wself->_delegate socket:wself didWrite:wrote];
-                });
-            }
-
-            if (wself->_wbuffer.length == 0)
+            if (wself->_wbuffer.length == 0) {
                 dispatch_suspend(wself->_wsource);
 
+                wself->_hasWrittenData = YES;
+
+                if (wself->_delegate && [wself->_delegate respondsToSelector:@selector(socket:didWrite:)]) {
+                    dispatch_async(wself->_delegateQueue, ^(void) {
+                        [wself->_delegate socket:wself didWrite:wrote];
+                    });
+                }
+            }
         });
 
         // Cancel handler
@@ -181,6 +185,8 @@
         dispatch_source_set_cancel_handler(wself->_wsource, cancelHandler);
         
         dispatch_resume(wself->_rsource);
+
+        wself->_isConnected = YES;
 
         if (wself->_delegate && [wself->_delegate respondsToSelector:@selector(socket:didConnectToHost:port:)]) {
             dispatch_async(wself->_delegateQueue, ^(void) {
@@ -200,6 +206,8 @@
 
     _rsource = nil;
     _wsource = nil;
+
+    _isConnected = NO;
 
     __unsafe_unretained GCDTcpSocket *wself = self;
 
@@ -263,6 +271,62 @@
         block();
     else
         dispatch_sync(_socketQueue, block);
+}
+
+@end
+
+@implementation GCDTcpSocket (Blocking)
+
+- (BOOL)waitForConnectionNotifyWithTimeout:(NSTimeInterval)timeout
+{
+    NSDate *end = [NSDate dateWithTimeIntervalSinceNow:timeout];
+
+    do {
+        if (self->_isConnected)
+            return YES;
+    } while ([[NSDate date] isLessThanOrEqualTo:end]);
+
+    return NO;
+}
+
+- (BOOL)waitForDisconnecionNotifyWithTimeout:(NSTimeInterval)timeout
+{
+    NSDate *end = [NSDate dateWithTimeIntervalSinceNow:timeout];
+
+    do {
+        if (!self->_isConnected)
+            return YES;
+    } while ([[NSDate date] isLessThanOrEqualTo:end]);
+
+    return NO;
+}
+
+- (BOOL)waitForReadNotifyWithTimeout:(NSTimeInterval)timeout
+{
+    NSDate *end = [NSDate dateWithTimeIntervalSinceNow:timeout];
+
+    do {
+        if (self->_hasReadableData)
+            return YES;
+    } while ([[NSDate date] isLessThanOrEqualTo:end]);
+
+    self->_hasReadableData = NO;
+
+    return NO;
+}
+
+- (BOOL)waitForWriteNotifyWithTimeout:(NSTimeInterval)timeout
+{
+    NSDate *end = [NSDate dateWithTimeIntervalSinceNow:timeout];
+
+    do {
+        if (self->_hasWrittenData)
+            return YES;
+    } while ([[NSDate date] isLessThanOrEqualTo:end]);
+
+    self->_hasWrittenData = NO;
+
+    return NO;
 }
 
 @end
