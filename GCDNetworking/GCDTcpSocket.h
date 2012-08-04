@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Develer srl. All rights reserved.
 //
 
+@protocol GCDTcpSocketDelegate;
+
 @interface GCDTcpSocket : NSObject
 {
     int _fd;
@@ -22,7 +24,7 @@
 @property (readonly) NSHost *host;
 @property (readonly) uint16_t port;
 
-@property (weak) id delegate;
+@property (weak) id<GCDTcpSocketDelegate> delegate;
 @property (assign) dispatch_queue_t delegateQueue;
 
 
@@ -52,7 +54,7 @@
 
 @end
 
-@protocol GCDTcpSocketDelegate
+@protocol GCDTcpSocketDelegate <NSObject>
 
 @optional
 - (void)socket:(GCDTcpSocket *)socket didConnectToHost:(NSHost *)host port:(uint16_t)port;
