@@ -4,8 +4,9 @@ to perform usually blocking operations.
 It is inspired by the famous CocoaAsyncSocket by Robbie Hanson (http://github.com/robbiehanson/CocoaAsyncSocket)
 but uses a dispatch_source_t as its engine.
 
-For now, the framework is composed only by the GCDTcpSocket class,
-but I have planned to add a GCDTcpServer and SSL capabilities for
-both GCDTcpSocket and GCDTcpserver, I don't know maybe by subclassing
-or using categories.
-UdpSocket is planned as well.
+For now, the framework is composed by the GCDTcpSocket and GCDTcpServer
+classes working both, asynchronous and synchronous.
+
+Things to do:
+* SSL
+* UDP
