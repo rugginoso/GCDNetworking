@@ -53,6 +53,25 @@
     return self;
 }
 
+- (id)initWithFileDescriptior:(int)fd
+{
+    struct sockaddr_in sock_addr;
+    socklen_t len = sizeof(struct sockaddr_in);
+
+    if (getpeername(fd, (struct sockaddr *) &sock_addr, &len) < 0)
+        return nil;
+
+    NSHost *host = [NSHost hostWithAddress:[NSString stringWithCString:inet_ntoa(sock_addr.sin_addr) encoding:NSASCIIStringEncoding]];
+    uint16_t port = ntohs(sock_addr.sin_port);
+
+    if (self = [self initWithHost:host port:port]) {
+        _fd = fd;
+        [self setupSources];
+    }
+
+    return self;
+}
+
 - (void)dealloc
 {
     _socketQueue = nil;
@@ -103,7 +122,16 @@
 
             return;
         }
+    });
 
+    [self setupSources];
+}
+
+- (void)setupSources
+{
+    __unsafe_unretained GCDTcpSocket *wself = self;
+
+    dispatch_async(wself->_socketQueue, ^(void) {
         // Create dispatch sources
         wself->_rsource = dispatch_source_create(DISPATCH_SOURCE_TYPE_READ,
                                             wself->_fd,

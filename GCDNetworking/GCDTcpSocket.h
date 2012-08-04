@@ -17,6 +17,7 @@
 @property (assign) dispatch_queue_t delegateQueue;
 
 - (id)initWithHost:(NSHost *)host port:(uint16_t)port;
+- (id)initWithFileDescriptior:(int)fd;
 
 - (void)connect;
 - (void)disconnect;
