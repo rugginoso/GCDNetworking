@@ -9,21 +9,6 @@
 @protocol GCDTcpSocketDelegate;
 
 @interface GCDTcpSocket : NSObject
-{
-    int _fd;
-
-    NSMutableData *_rbuffer;
-    NSMutableData *_wbuffer;
-
-    dispatch_queue_t _socketQueue;
-
-    dispatch_source_t _rsource;
-    dispatch_source_t _wsource;
-
-    BOOL _isConnected;
-    BOOL _hasReadableData;
-    BOOL _hasWrittenData;
-}
 
 @property (readonly) NSHost *host;
 @property (readonly) uint16_t port;

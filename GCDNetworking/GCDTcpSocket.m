@@ -14,8 +14,26 @@
 #import <sys/socket.h>
 #import <arpa/inet.h>
 
+@interface GCDTcpSocket ()
+
+@property BOOL isConnected;
+@property BOOL hasReadableData;
+@property BOOL hasWrittenData;
+
+@end
 
 @implementation GCDTcpSocket
+{
+    int _fd;
+
+    NSMutableData *_rbuffer;
+    NSMutableData *_wbuffer;
+
+    dispatch_queue_t _socketQueue;
+
+    dispatch_source_t _rsource;
+    dispatch_source_t _wsource;
+}
 
 - (id)initWithHost:(NSHost *)host port:(uint16_t)port
 {
@@ -125,7 +143,7 @@
 
             [wself->_rbuffer appendBytes:buf length:got];
 
-            wself->_hasReadableData = YES;
+            wself.hasReadableData = YES;
 
             if (wself->_delegate && [wself->_delegate respondsToSelector:@selector(socket:didReceive:)]) {
                 dispatch_async(wself->_delegateQueue, ^(void) {
@@ -166,7 +184,7 @@
             if (wself->_wbuffer.length == 0) {
                 dispatch_suspend(wself->_wsource);
 
-                wself->_hasWrittenData = YES;
+                wself.hasWrittenData = YES;
 
                 if (wself->_delegate && [wself->_delegate respondsToSelector:@selector(socket:didWrite:)]) {
                     dispatch_async(wself->_delegateQueue, ^(void) {
@@ -186,7 +204,7 @@
         
         dispatch_resume(wself->_rsource);
 
-        wself->_isConnected = YES;
+        wself.isConnected = YES;
 
         if (wself->_delegate && [wself->_delegate respondsToSelector:@selector(socket:didConnectToHost:port:)]) {
             dispatch_async(wself->_delegateQueue, ^(void) {
@@ -207,7 +225,7 @@
     _rsource = nil;
     _wsource = nil;
 
-    _isConnected = NO;
+    self.isConnected = NO;
 
     __unsafe_unretained GCDTcpSocket *wself = self;
 
@@ -282,7 +300,7 @@
     NSDate *end = [NSDate dateWithTimeIntervalSinceNow:timeout];
 
     do {
-        if (self->_isConnected)
+        if (self.isConnected)
             return YES;
     } while ([[NSDate date] isLessThanOrEqualTo:end]);
 
@@ -294,7 +312,7 @@
     NSDate *end = [NSDate dateWithTimeIntervalSinceNow:timeout];
 
     do {
-        if (!self->_isConnected)
+        if (!self.isConnected)
             return YES;
     } while ([[NSDate date] isLessThanOrEqualTo:end]);
 
@@ -306,11 +324,11 @@
     NSDate *end = [NSDate dateWithTimeIntervalSinceNow:timeout];
 
     do {
-        if (self->_hasReadableData)
+        if (self.hasReadableData)
             return YES;
     } while ([[NSDate date] isLessThanOrEqualTo:end]);
 
-    self->_hasReadableData = NO;
+    self.hasReadableData = NO;
 
     return NO;
 }
@@ -320,11 +338,11 @@
     NSDate *end = [NSDate dateWithTimeIntervalSinceNow:timeout];
 
     do {
-        if (self->_hasWrittenData)
+        if (self.hasWrittenData)
             return YES;
     } while ([[NSDate date] isLessThanOrEqualTo:end]);
 
-    self->_hasWrittenData = NO;
+    self.hasWrittenData = NO;
 
     return NO;
 }
