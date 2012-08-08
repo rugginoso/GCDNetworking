@@ -74,6 +74,9 @@
 
 - (void)dealloc
 {
+    if (self.isConnected)
+        [self disconnect];
+
     _socketQueue = nil;
     _host = nil;
     _wbuffer = nil;
