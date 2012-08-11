@@ -17,7 +17,6 @@
 
 @interface GCDTcpServer ()
 
-@property BOOL hasIncomingConnections;
 @property BOOL listening;
 
 @end
@@ -203,24 +202,24 @@
 
 - (BOOL)waitForStartListeningNotifyWithTimeout:(NSTimeInterval)timeout
 {
-    NSDate *end = [NSDate dateWithTimeIntervalSinceNow:timeout];
+    CFAbsoluteTime end = CFAbsoluteTimeGetCurrent() + timeout;
 
     do {
         if (self.isListening)
             return YES;
-    } while ([[NSDate date] isLessThanOrEqualTo:end]);
+    } while (CFAbsoluteTimeGetCurrent() <= end);
 
     return NO;
 }
 
 - (BOOL)waitForStopListeningNotifyWithTimeout:(NSTimeInterval)timeout
 {
-    NSDate *end = [NSDate dateWithTimeIntervalSinceNow:timeout];
+    CFAbsoluteTime end = CFAbsoluteTimeGetCurrent() + timeout;
 
     do {
         if (!self.isListening)
             return YES;
-    } while ([[NSDate date] isLessThanOrEqualTo:end]);
+    } while (CFAbsoluteTimeGetCurrent() <= end);
 
     return NO;
 }
@@ -234,7 +233,7 @@
         result = wself->_incomingConnections.count > 0;
     };
 
-    NSDate *end = [NSDate dateWithTimeIntervalSinceNow:timeout];
+    CFAbsoluteTime end = CFAbsoluteTimeGetCurrent() + timeout;
 
     do {
         if (dispatch_get_current_queue() == _socketQueue)
@@ -245,7 +244,7 @@
         if (result)
             return YES;
 
-    } while ([[NSDate date] isLessThanOrEqualTo:end]);
+    } while (CFAbsoluteTimeGetCurrent() <= end);
     
     return NO;
 }

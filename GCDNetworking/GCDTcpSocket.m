@@ -322,24 +322,24 @@
 
 - (BOOL)waitForConnectionNotifyWithTimeout:(NSTimeInterval)timeout
 {
-    NSDate *end = [NSDate dateWithTimeIntervalSinceNow:timeout];
+    CFAbsoluteTime end = CFAbsoluteTimeGetCurrent() + timeout;
 
     do {
         if (self.isConnected)
             return YES;
-    } while ([[NSDate date] isLessThanOrEqualTo:end]);
+    } while (CFAbsoluteTimeGetCurrent() <= end);
 
     return NO;
 }
 
 - (BOOL)waitForDisconnecionNotifyWithTimeout:(NSTimeInterval)timeout
 {
-    NSDate *end = [NSDate dateWithTimeIntervalSinceNow:timeout];
+    CFAbsoluteTime end = CFAbsoluteTimeGetCurrent() + timeout;
 
     do {
         if (!self.isConnected)
             return YES;
-    } while ([[NSDate date] isLessThanOrEqualTo:end]);
+    } while (CFAbsoluteTimeGetCurrent() <= end);
 
     return NO;
 }
@@ -353,7 +353,7 @@
         result = wself->_rbuffer.length > 0;
     };
 
-    NSDate *end = [NSDate dateWithTimeIntervalSinceNow:timeout];
+    CFAbsoluteTime end = CFAbsoluteTimeGetCurrent() + timeout;
 
     do {
         if (dispatch_get_current_queue() == _socketQueue)
@@ -364,7 +364,7 @@
         if (result)
             return YES;
 
-    } while ([[NSDate date] isLessThanOrEqualTo:end]);
+    } while (CFAbsoluteTimeGetCurrent() <= end);
 
     return NO;
 }
@@ -378,7 +378,7 @@
         result = wself->_wbuffer.length == 0;
     };
 
-    NSDate *end = [NSDate dateWithTimeIntervalSinceNow:timeout];
+    CFAbsoluteTime end = CFAbsoluteTimeGetCurrent() + timeout;
 
     do {
         if (dispatch_get_current_queue() == _socketQueue)
@@ -389,7 +389,7 @@
         if (result)
             return YES;
 
-    } while ([[NSDate date] isLessThanOrEqualTo:end]);
+    } while (CFAbsoluteTimeGetCurrent() <= end);
 
     return NO;
 }
