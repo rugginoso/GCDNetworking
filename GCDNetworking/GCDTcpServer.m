@@ -116,28 +116,34 @@
         // Accept handler
         dispatch_source_set_event_handler(wself->_source, ^(void) {
             NSUInteger estimated = dispatch_source_get_data(wself->_source);
-            NSLog(@"Estimated connections: %lu", estimated);
+            NSUInteger accepted = 0;
 
-            int client_fd = -1;
+            while (estimated > 0) {
+                int client_fd = -1;
 
-            if ((client_fd = accept(wself->_fd, NULL, NULL)) < 0) {
-                if (wself->_delegate && [wself->_delegate respondsToSelector:@selector(server:didHaveError:)]) {
-                    NSError *error = [NSError errorWithDomain:NSPOSIXErrorDomain
-                                                         code:errno
-                                                     userInfo:nil];
+                if ((client_fd = accept(wself->_fd, NULL, NULL)) < 0) {
+                    if (wself->_delegate && [wself->_delegate respondsToSelector:@selector(server:didHaveError:)]) {
+                        NSError *error = [NSError errorWithDomain:NSPOSIXErrorDomain
+                                                             code:errno
+                                                         userInfo:nil];
 
-                    dispatch_async(wself->_delegateQueue, ^(void) {
-                        [wself->_delegate server:wself didHaveError:error];
-                    });
+                        dispatch_async(wself->_delegateQueue, ^(void) {
+                            [wself->_delegate server:wself didHaveError:error];
+                        });
+                    }
+                    continue;
                 }
-            }
 
-            GCDTcpSocket *client = [[GCDTcpSocket alloc] initWithFileDescriptior:client_fd];
-            [wself->_incomingConnections addObject:client];
+                GCDTcpSocket *client = [[GCDTcpSocket alloc] initWithFileDescriptior:client_fd];
+                [wself->_incomingConnections addObject:client];
+
+                estimated--;
+                accepted++;
+            }
 
             if (wself->_delegate && [wself->_delegate respondsToSelector:@selector(server:didAcceptNewConnections:)]) {
                 dispatch_async(wself->_delegateQueue, ^(void) {
-                    [wself->_delegate server:wself didAcceptNewConnections:wself->_incomingConnections.count];
+                    [wself->_delegate server:wself didAcceptNewConnections:accepted];
                 });
             }
         });
