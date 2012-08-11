@@ -16,6 +16,9 @@
 @property (weak) id<GCDTcpSocketDelegate> delegate;
 @property (assign) dispatch_queue_t delegateQueue;
 
+@property (readonly, getter=isConnected) BOOL connected;
+
+
 - (id)initWithHost:(NSHost *)host port:(uint16_t)port;
 - (id)initWithFileDescriptior:(int)fd;
 

@@ -16,9 +16,7 @@
 
 @interface GCDTcpSocket ()
 
-@property BOOL isConnected;
-@property BOOL hasReadableData;
-@property BOOL hasWrittenData;
+@property BOOL connected;
 
 @end
 
@@ -174,8 +172,6 @@
 
             [wself->_rbuffer appendBytes:buf length:got];
 
-            wself.hasReadableData = YES;
-
             if (wself->_delegate && [wself->_delegate respondsToSelector:@selector(socket:didReceive:)]) {
                 dispatch_async(wself->_delegateQueue, ^(void) {
                     [wself->_delegate socket:wself didReceive:got];
@@ -215,8 +211,6 @@
             if (wself->_wbuffer.length == 0) {
                 dispatch_suspend(wself->_wsource);
 
-                wself.hasWrittenData = YES;
-
                 if (wself->_delegate && [wself->_delegate respondsToSelector:@selector(socket:didWrite:)]) {
                     dispatch_async(wself->_delegateQueue, ^(void) {
                         [wself->_delegate socket:wself didWrite:wrote];
@@ -235,7 +229,7 @@
         
         dispatch_resume(wself->_rsource);
 
-        wself.isConnected = YES;
+        wself.connected = YES;
 
         if (wself->_delegate && [wself->_delegate respondsToSelector:@selector(socket:didConnectToHost:port:)]) {
             dispatch_async(wself->_delegateQueue, ^(void) {
@@ -256,7 +250,7 @@
     _rsource = nil;
     _wsource = nil;
 
-    self.isConnected = NO;
+    self.connected = NO;
 
     __unsafe_unretained GCDTcpSocket *wself = self;
 
@@ -352,28 +346,50 @@
 
 - (BOOL)waitForReadNotifyWithTimeout:(NSTimeInterval)timeout
 {
+    __unsafe_unretained GCDTcpSocket *wself = self;
+    __block BOOL result = NO;
+
+    dispatch_block_t block = ^(void) {
+        result = wself->_rbuffer.length > 0;
+    };
+
     NSDate *end = [NSDate dateWithTimeIntervalSinceNow:timeout];
 
     do {
-        if (self.hasReadableData)
-            return YES;
-    } while ([[NSDate date] isLessThanOrEqualTo:end]);
+        if (dispatch_get_current_queue() == _socketQueue)
+            block();
+        else
+            dispatch_sync(_socketQueue, block);
 
-    self.hasReadableData = NO;
+        if (result)
+            return YES;
+
+    } while ([[NSDate date] isLessThanOrEqualTo:end]);
 
     return NO;
 }
 
 - (BOOL)waitForWriteNotifyWithTimeout:(NSTimeInterval)timeout
 {
+    __unsafe_unretained GCDTcpSocket *wself = self;
+    __block BOOL result = NO;
+
+    dispatch_block_t block = ^(void) {
+        result = wself->_wbuffer.length == 0;
+    };
+
     NSDate *end = [NSDate dateWithTimeIntervalSinceNow:timeout];
 
     do {
-        if (self.hasWrittenData)
-            return YES;
-    } while ([[NSDate date] isLessThanOrEqualTo:end]);
+        if (dispatch_get_current_queue() == _socketQueue)
+            block();
+        else
+            dispatch_sync(_socketQueue, block);
 
-    self.hasWrittenData = NO;
+        if (result)
+            return YES;
+
+    } while ([[NSDate date] isLessThanOrEqualTo:end]);
 
     return NO;
 }

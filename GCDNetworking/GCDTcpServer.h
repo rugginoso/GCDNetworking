@@ -16,6 +16,7 @@
 @property (weak) id<GCDTcpServerDelegate> delegate;
 @property (assign) dispatch_queue_t delegateQueue;
 
+@property (readonly, getter=isListening) BOOL listening;
 
 - (id)initWithListenAddress:(NSHost *)host port:(uint16_t)port;
 

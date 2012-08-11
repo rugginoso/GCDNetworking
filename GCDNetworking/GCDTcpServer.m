@@ -18,7 +18,7 @@
 @interface GCDTcpServer ()
 
 @property BOOL hasIncomingConnections;
-@property BOOL isListening;
+@property BOOL listening;
 
 @end
 
@@ -136,8 +136,6 @@
             GCDTcpSocket *client = [[GCDTcpSocket alloc] initWithFileDescriptior:client_fd];
             [wself->_incomingConnections addObject:client];
 
-            wself.hasIncomingConnections = YES;
-
             if (wself->_delegate && [wself->_delegate respondsToSelector:@selector(server:didAcceptNewConnections:)]) {
                 dispatch_async(wself->_delegateQueue, ^(void) {
                     [wself->_delegate server:wself didAcceptNewConnections:wself->_incomingConnections.count];
@@ -151,7 +149,7 @@
 
         dispatch_resume(wself->_source);
 
-        wself.isListening = YES;
+        wself.listening = YES;
 
         if (wself->_delegate && [wself->_delegate respondsToSelector:@selector(server:didStartListeningOnHost:port:)]) {
             dispatch_async(wself->_delegateQueue, ^(void) {
@@ -166,7 +164,7 @@
     dispatch_source_cancel(_source);
     _source = nil;
 
-    self.isListening = NO;
+    self.listening = NO;
 
     __unsafe_unretained GCDTcpServer *wself = self;
 
@@ -176,7 +174,7 @@
         });
     }
 
-    // FIXME: Maybe explicitly disconnect al the clients?
+    // FIXME: Maybe explicitly disconnect all the clients?
 }
 
 - (GCDTcpSocket *)nextPendingConnection
@@ -229,15 +227,26 @@
 
 - (BOOL)waitForNewConnectionNotifyWithTimeout:(NSTimeInterval)timeout
 {
+    __unsafe_unretained GCDTcpServer *wself = self;
+    __block BOOL result = NO;
+
+    dispatch_block_t block = ^(void) {
+        result = wself->_incomingConnections.count > 0;
+    };
+
     NSDate *end = [NSDate dateWithTimeIntervalSinceNow:timeout];
 
     do {
-        if (self.hasIncomingConnections)
+        if (dispatch_get_current_queue() == _socketQueue)
+            block();
+        else
+            dispatch_sync(_socketQueue, block);
+
+        if (result)
             return YES;
+
     } while ([[NSDate date] isLessThanOrEqualTo:end]);
-
-    self.hasIncomingConnections = NO;
-
+    
     return NO;
 }
 
