@@ -448,8 +448,7 @@
     withSeparator:(NSString *)separator
     usingEncoding:(NSStringEncoding)encoding
 {
-    NSString *string = [NSString stringWithFormat:@"%@%@", line, separator];
-
+    NSString *string = [line stringByAppendingString:separator];
     NSData *data = [string dataUsingEncoding:encoding];
     
     [self writeData:data];
