@@ -187,6 +187,8 @@
                                   wself->_wbuffer.bytes,
                                   wself->_wbuffer.length);
 
+            dispatch_suspend(wself->_wsource);
+
             if (wrote < 0) {
                 if (wself->_delegate && [wself->_delegate respondsToSelector:@selector(socket:didHaveError:)]) {
                     NSError *error = [NSError errorWithDomain:NSPOSIXErrorDomain
@@ -208,14 +210,10 @@
                                         withBytes:NULL
                                            length:0];
 
-            if (wself->_wbuffer.length == 0) {
-                dispatch_suspend(wself->_wsource);
-
-                if (wself->_delegate && [wself->_delegate respondsToSelector:@selector(socket:didWrite:)]) {
-                    dispatch_async(wself->_delegateQueue, ^(void) {
-                        [wself->_delegate socket:wself didWrite:wrote];
-                    });
-                }
+            if (wself->_delegate && [wself->_delegate respondsToSelector:@selector(socket:didWrite:)]) {
+                dispatch_async(wself->_delegateQueue, ^(void) {
+                    [wself->_delegate socket:wself didWrite:wrote];
+                });
             }
         });
 
@@ -228,6 +226,7 @@
         dispatch_source_set_cancel_handler(wself->_wsource, cancelHandler);
         
         dispatch_resume(wself->_rsource);
+        //dispatch_resume(wself->_wsource);
 
         wself.connected = YES;
 
@@ -313,7 +312,7 @@
     if (dispatch_get_current_queue() == _socketQueue)
         block();
     else
-        dispatch_sync(_socketQueue, block);
+        dispatch_async(_socketQueue, block);
 }
 
 @end
