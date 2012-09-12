@@ -158,7 +158,7 @@
 
         if (wself->_delegate && [wself->_delegate respondsToSelector:@selector(server:didStartListeningOnHost:port:)]) {
             dispatch_async(wself->_delegateQueue, ^(void) {
-                [wself->_delegate server:wself didStopListeningOnHost:wself->_host port:wself->_port];
+                [wself->_delegate server:wself didStartListeningOnHost:wself->_host port:wself->_port];
             });
         }
     });
