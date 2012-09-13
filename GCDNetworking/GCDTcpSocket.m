@@ -147,12 +147,22 @@
 
         // Read handler
         dispatch_source_set_event_handler(wself->_rsource, ^(void) {
+            void *buf = NULL;
             NSUInteger estimated = dispatch_source_get_data(wself->_rsource);
-            void *buf = malloc(estimated);
+            ssize_t got = 0;
 
-            ssize_t got = read(wself->_fd, buf, estimated);
-            if (got < 0) {
+            if (estimated) {
+                buf = malloc(estimated);
+                got = read(wself->_fd, buf, estimated);
+            }
 
+            if (got == 0) { // EOF
+                free(buf);
+                [wself disconnect];
+                return;
+            }
+
+            if (got < 0) { // Error
                 if (wself->_delegate && [wself->_delegate respondsToSelector:@selector(socket:didHaveError:)]) {
                     NSError *error = [NSError errorWithDomain:NSPOSIXErrorDomain
                                                          code:errno
@@ -204,7 +214,6 @@
 
                 return;
             }
-
 
             [wself->_wbuffer replaceBytesInRange:NSMakeRange(0, wrote)
                                         withBytes:NULL
