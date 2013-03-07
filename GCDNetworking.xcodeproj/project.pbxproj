@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		ED00609E15CC594100B94CCD /* GCDTcpServer.h in Headers */ = {isa = PBXBuildFile; fileRef = ED00609C15CC594100B94CCD /* GCDTcpServer.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		ED00609F15CC594100B94CCD /* GCDTcpServer.m in Sources */ = {isa = PBXBuildFile; fileRef = ED00609D15CC594100B94CCD /* GCDTcpServer.m */; };
+		ED055F1916E1041A00B6E34E /* GCDInputStream.h in Headers */ = {isa = PBXBuildFile; fileRef = ED055F1716E1041A00B6E34E /* GCDInputStream.h */; };
+		ED055F1A16E1041A00B6E34E /* GCDInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = ED055F1816E1041A00B6E34E /* GCDInputStream.m */; };
+		ED055F1D16E10EAA00B6E34E /* GCDOutputStream.h in Headers */ = {isa = PBXBuildFile; fileRef = ED055F1B16E10EAA00B6E34E /* GCDOutputStream.h */; };
+		ED055F1E16E10EAA00B6E34E /* GCDOutputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = ED055F1C16E10EAA00B6E34E /* GCDOutputStream.m */; };
 		ED10BB3415C79D9900784627 /* GCDTcpSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = ED10BB3215C79D9900784627 /* GCDTcpSocket.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		ED10BB3515C79D9900784627 /* GCDTcpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = ED10BB3315C79D9900784627 /* GCDTcpSocket.m */; };
 		EDDD263314E058D8003379E4 /* GCDNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = EDE9B98D14E01A1400C06D16 /* GCDNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -19,6 +23,10 @@
 /* Begin PBXFileReference section */
 		ED00609C15CC594100B94CCD /* GCDTcpServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDTcpServer.h; sourceTree = "<group>"; };
 		ED00609D15CC594100B94CCD /* GCDTcpServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDTcpServer.m; sourceTree = "<group>"; };
+		ED055F1716E1041A00B6E34E /* GCDInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDInputStream.h; sourceTree = "<group>"; };
+		ED055F1816E1041A00B6E34E /* GCDInputStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDInputStream.m; sourceTree = "<group>"; };
+		ED055F1B16E10EAA00B6E34E /* GCDOutputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDOutputStream.h; sourceTree = "<group>"; };
+		ED055F1C16E10EAA00B6E34E /* GCDOutputStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDOutputStream.m; sourceTree = "<group>"; };
 		ED10BB3215C79D9900784627 /* GCDTcpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDTcpSocket.h; sourceTree = "<group>"; };
 		ED10BB3315C79D9900784627 /* GCDTcpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDTcpSocket.m; sourceTree = "<group>"; };
 		EDE9B97D14E01A1400C06D16 /* GCDNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GCDNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -41,6 +49,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EDA2CF1F16E38B6B009B2143 /* Streams */ = {
+			isa = PBXGroup;
+			children = (
+				ED055F1716E1041A00B6E34E /* GCDInputStream.h */,
+				ED055F1816E1041A00B6E34E /* GCDInputStream.m */,
+				ED055F1B16E10EAA00B6E34E /* GCDOutputStream.h */,
+				ED055F1C16E10EAA00B6E34E /* GCDOutputStream.m */,
+			);
+			name = Streams;
+			sourceTree = "<group>";
+		};
 		EDE9B97114E01A1400C06D16 = {
 			isa = PBXGroup;
 			children = (
@@ -69,6 +88,7 @@
 		EDE9B98614E01A1400C06D16 /* GCDNetworking */ = {
 			isa = PBXGroup;
 			children = (
+				EDA2CF1F16E38B6B009B2143 /* Streams */,
 				ED00609C15CC594100B94CCD /* GCDTcpServer.h */,
 				ED00609D15CC594100B94CCD /* GCDTcpServer.m */,
 				EDE9B98D14E01A1400C06D16 /* GCDNetworking.h */,
@@ -99,6 +119,8 @@
 				EDDD263314E058D8003379E4 /* GCDNetworking.h in Headers */,
 				ED10BB3415C79D9900784627 /* GCDTcpSocket.h in Headers */,
 				ED00609E15CC594100B94CCD /* GCDTcpServer.h in Headers */,
+				ED055F1916E1041A00B6E34E /* GCDInputStream.h in Headers */,
+				ED055F1D16E10EAA00B6E34E /* GCDOutputStream.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,7 +151,7 @@
 		EDE9B97314E01A1400C06D16 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0440;
+				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Develer srl";
 			};
 			buildConfigurationList = EDE9B97614E01A1400C06D16 /* Build configuration list for PBXProject "GCDNetworking" */;
@@ -167,6 +189,8 @@
 			files = (
 				ED10BB3515C79D9900784627 /* GCDTcpSocket.m in Sources */,
 				ED00609F15CC594100B94CCD /* GCDTcpServer.m in Sources */,
+				ED055F1A16E1041A00B6E34E /* GCDInputStream.m in Sources */,
+				ED055F1E16E10EAA00B6E34E /* GCDOutputStream.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,6 +213,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -203,6 +231,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
@@ -215,6 +244,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -223,6 +256,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx;
