@@ -10,7 +10,7 @@
 
 @interface GCDTcpSocket : NSObject
 
-@property (readonly, strong) NSHost *host;
+@property (readonly, strong) NSString *host;
 @property (readonly) uint16_t port;
 
 @property (weak) id<GCDTcpSocketDelegate> delegate;
@@ -19,7 +19,7 @@
 @property (readonly, getter=isConnected) BOOL connected;
 
 
-- (id)initWithHost:(NSHost *)host port:(uint16_t)port;
+- (id)initWithHost:(NSString *)host port:(uint16_t)port;
 - (id)initWithFileDescriptior:(int)fd;
 
 - (void)connect;
@@ -59,8 +59,8 @@
 @protocol GCDTcpSocketDelegate <NSObject>
 
 @optional
-- (void)socket:(GCDTcpSocket *)socket didConnectToHost:(NSHost *)host port:(uint16_t)port;
-- (void)socket:(GCDTcpSocket *)socket didDisconnectFromHost:(NSHost *)host port:(uint16_t)port;
+- (void)socket:(GCDTcpSocket *)socket didConnectToHost:(NSString *)host port:(uint16_t)port;
+- (void)socket:(GCDTcpSocket *)socket didDisconnectFromHost:(NSString *)host port:(uint16_t)port;
 
 - (void)socket:(GCDTcpSocket *)socket didReceive:(NSUInteger)bytes;
 - (void)socket:(GCDTcpSocket *)socket didWrite:(NSUInteger)bytes;

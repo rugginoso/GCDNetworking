@@ -13,7 +13,7 @@
 
 #import <sys/types.h>
 #import <sys/socket.h>
-#import <arpa/inet.h>
+#import <netdb.h>
 
 @interface GCDTcpServer ()
 
@@ -23,8 +23,6 @@
 
 @implementation GCDTcpServer
 {
-    int _fd;
-
     dispatch_queue_t _socketQueue;
 
     dispatch_source_t _source;
@@ -32,16 +30,14 @@
     NSMutableArray * _incomingConnections;
 }
 
-- (id)initWithListenAddress:(NSHost *)host port:(uint16_t)port
+- (id)initWithListenAddress:(NSString *)host port:(uint16_t)port
 {
     if (self = [super init]) {
         _host = host;
         _port = port;
 
-        _socketQueue = dispatch_queue_create("GCDTcpServer", DISPATCH_QUEUE_SERIAL);
+        _socketQueue = dispatch_queue_create("GCDNetworking.AcceptQueue", DISPATCH_QUEUE_SERIAL);
         _delegateQueue = dispatch_get_main_queue();
-
-        _fd = -1;
 
         _incomingConnections = [[NSMutableArray alloc] init];
     }
@@ -54,16 +50,20 @@
     __unsafe_unretained GCDTcpServer *wself = self;
 
     dispatch_async(wself->_socketQueue, ^(void) {
-        // Connect to host
-        struct sockaddr_in addr;
-        memset(&addr, 0, sizeof(struct sockaddr_in));
+        int fd = -1;
 
-        const char *hostname = [[wself->_host address] cStringUsingEncoding:NSASCIIStringEncoding];
+        struct addrinfo *info;
+        struct addrinfo hints = {AI_ADDRCONFIG|AI_PASSIVE, PF_UNSPEC, SOCK_STREAM, IPPROTO_TCP};
+        int ret;
+        if ((ret = getaddrinfo([wself->_host cStringUsingEncoding:NSUTF8StringEncoding],
+                               [[NSString stringWithFormat:@"%u", wself->_port] cStringUsingEncoding:NSUTF8StringEncoding],
+                               &hints,
+                               &info)) != 0) {
+            NSLog(@"Error resolving name: %s", gai_strerror(ret));
+            return;
+        }
 
-        inet_aton(hostname, &addr.sin_addr);
-        addr.sin_port = htons(wself->_port);
-
-        if ((wself->_fd = socket(PF_INET, SOCK_STREAM, 0)) < 0)
+        if ((fd = socket(info->ai_family, info->ai_socktype, 0)) < 0)
         {
             if (wself->_delegate && [wself->_delegate respondsToSelector:@selector(server:didHaveError:)]) {
                 NSError *error = [NSError errorWithDomain:NSPOSIXErrorDomain
@@ -78,7 +78,7 @@
             return;
         }
 
-        if (bind(wself->_fd, (struct sockaddr *) &addr, sizeof(struct sockaddr_in)) < 0) {
+        if (bind(fd, info->ai_addr, info->ai_addrlen) < 0) {
             if (wself->_delegate && [wself->_delegate respondsToSelector:@selector(server:didHaveError:)]) {
                 NSError *error = [NSError errorWithDomain:NSPOSIXErrorDomain
                                                      code:errno
@@ -92,7 +92,7 @@
             return;
         }
 
-        if (listen(wself->_fd, 5) < 0) {
+        if (listen(fd, 5) < 0) {
             if (wself->_delegate && [wself->_delegate respondsToSelector:@selector(server:didHaveError:)]) {
                 NSError *error = [NSError errorWithDomain:NSPOSIXErrorDomain
                                                      code:errno
@@ -105,11 +105,11 @@
 
             return;
         }
-
+        freeaddrinfo(info);
 
         // Create dispatch sources
         wself->_source = dispatch_source_create(DISPATCH_SOURCE_TYPE_READ,
-                                                wself->_fd,
+                                                fd,
                                                 0,
                                                 wself->_socketQueue);
 
@@ -121,7 +121,7 @@
             while (estimated > 0) {
                 int client_fd = -1;
 
-                if ((client_fd = accept(wself->_fd, NULL, NULL)) < 0) {
+                if ((client_fd = accept(fd, NULL, NULL)) < 0) {
                     if (wself->_delegate && [wself->_delegate respondsToSelector:@selector(server:didHaveError:)]) {
                         NSError *error = [NSError errorWithDomain:NSPOSIXErrorDomain
                                                              code:errno
@@ -149,7 +149,7 @@
         });
 
         dispatch_source_set_cancel_handler(wself->_source, ^(void) {
-            close(wself->_fd);
+            close(fd);
         });
 
         dispatch_resume(wself->_source);

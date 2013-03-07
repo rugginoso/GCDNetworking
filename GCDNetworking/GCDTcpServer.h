@@ -10,7 +10,7 @@
 
 @interface GCDTcpServer : NSObject
 
-@property (readonly, strong) NSHost *host;
+@property (readonly, strong) NSString *host;
 @property (readonly) uint16_t port;
 
 @property (weak) id<GCDTcpServerDelegate> delegate;
@@ -18,7 +18,7 @@
 
 @property (readonly, getter=isListening) BOOL listening;
 
-- (id)initWithListenAddress:(NSHost *)host port:(uint16_t)port;
+- (id)initWithListenAddress:(NSString *)host port:(uint16_t)port;
 
 - (void)startListen;
 - (void)stopListen;
@@ -39,8 +39,8 @@
 @protocol GCDTcpServerDelegate <NSObject>
 @optional
 
-- (void)server:(GCDTcpServer *)server didStartListeningOnHost:(NSHost*)host port:(uint16_t)port;
-- (void)server:(GCDTcpServer *)server didStopListeningOnHost:(NSHost*)host port:(uint16_t)port;
+- (void)server:(GCDTcpServer *)server didStartListeningOnHost:(NSString *)host port:(uint16_t)port;
+- (void)server:(GCDTcpServer *)server didStopListeningOnHost:(NSString *)host port:(uint16_t)port;
 
 - (void)server:(GCDTcpServer *)server didAcceptNewConnections:(NSUInteger)connections;
 

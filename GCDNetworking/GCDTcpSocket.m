@@ -12,11 +12,17 @@
 
 #import <sys/types.h>
 #import <sys/socket.h>
-#import <arpa/inet.h>
+#import <netdb.h>
+
+#import "GCDInputStream.h"
+#import "GCDOutputStream.h"
+
 
 @interface GCDTcpSocket ()
 
 @property BOOL connected;
+
+- (void)setupStreamsWithFileDescriptor:(int)fd;
 
 @end
 
@@ -28,7 +34,7 @@
     GCDOutputStream *_outputStream;
 }
 
-- (id)initWithHost:(NSHost *)host port:(uint16_t)port
+- (id)initWithHost:(NSString *)host port:(uint16_t)port
 {
     if (self = [super init]) {
         _host = host;
@@ -42,14 +48,21 @@
 
 - (id)initWithFileDescriptior:(int)fd
 {
-    struct sockaddr_in sock_addr;
-    socklen_t len = sizeof(struct sockaddr_in);
+    struct sockaddr_storage addr;
+    socklen_t len = sizeof(addr);
 
-    if (getpeername(fd, (struct sockaddr *) &sock_addr, &len) < 0)
+    if (getpeername(fd, (struct sockaddr *) &addr, &len) < 0)
         return nil;
 
-    NSHost *host = [NSHost hostWithAddress:[NSString stringWithCString:inet_ntoa(sock_addr.sin_addr) encoding:NSASCIIStringEncoding]];
-    uint16_t port = ntohs(sock_addr.sin_port);
+    char hostname[NI_MAXHOST + 1];
+    char portbuf[NI_MAXSERV + 1];
+    int ret;
+    if ((ret = getnameinfo((struct sockaddr *)&addr, len, hostname, NI_MAXHOST, portbuf, NI_MAXSERV, NI_NUMERICHOST|NI_NUMERICSERV)) != 0) {
+        NSLog(@"Error resolving name: %s", gai_strerror(ret));
+    }
+
+    NSString *host = [NSString stringWithCString:hostname encoding:NSASCIIStringEncoding];
+    uint16_t port = [[NSString stringWithCString:portbuf encoding:NSASCIIStringEncoding] intValue];
 
     if (self = [self initWithHost:host port:port]) {
         [self setupStreamsWithFileDescriptor:fd];
@@ -72,14 +85,18 @@
 
     dispatch_async(wself->_socketQueue, ^(void) {
         // Connect to host
-        struct sockaddr_in addr;
-        memset(&addr, 0, sizeof(struct sockaddr_in));
-
-        const char *hostname = [[wself->_host address] cStringUsingEncoding:NSASCIIStringEncoding];
-
-        inet_aton(hostname, &addr.sin_addr);
-        addr.sin_port = htons(wself->_port);
         int fd = -1;
+
+        struct addrinfo *info;
+        struct addrinfo hints = {AI_ADDRCONFIG, PF_UNSPEC, SOCK_STREAM, IPPROTO_TCP};
+        int ret;
+        if ((ret = getaddrinfo([wself->_host cStringUsingEncoding:NSUTF8StringEncoding],
+                    [[NSString stringWithFormat:@"%u", wself->_port] cStringUsingEncoding:NSUTF8StringEncoding],
+                    &hints,
+                    &info)) != 0) {
+            NSLog(@"Error resolving name: %s", gai_strerror(ret));
+            return;
+        }
 
         if ((fd = socket(info->ai_family, info->ai_socktype, 0)) < 0)
         {
@@ -96,7 +113,7 @@
             return;
         }
 
-        if (connect(wself->_fd, (struct sockaddr *) &addr, sizeof(struct sockaddr_in)) < 0) {
+        if (connect(fd, info->ai_addr, info->ai_addrlen) < 0) {
             if (wself->_delegate && [wself->_delegate respondsToSelector:@selector(socket:didHaveError:)]) {
                 NSError *error = [NSError errorWithDomain:NSPOSIXErrorDomain
                                                      code:errno
@@ -109,7 +126,7 @@
 
             return;
         }
-    });
+        freeaddrinfo(info);
 
         [self setupStreamsWithFileDescriptor:fd];
     });
@@ -177,6 +194,7 @@
 
 - (NSUInteger)bytesAvaiable
 {
+    return [_inputStream bytesAvaiable];
 }
 
 - (NSData *)readDataToLength:(NSUInteger)length
